@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+  <head>
+    <title>Transit Arrivals using GRID-BOOTSTRAP</title>
+    <link href="stylesheets/grid.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js">
+    </script>
+
+    <link rel="stylesheet" href="stylesheets/naveed.css">
+
+    <!--<script link src="naveed.js">-->
+    </script>
+
+  </head>
+  <body>
+  <nav class="col-xs-12 col-md-12">
+      <ul class="nav navbar-nav ">
+        <li class="active"><a href="#">Home</a></li>
+        <li ><a href="#">About</a></li>
+        <li ><a href="#">Contact</a></li>
+      </ul>
+    <header > TRANSIT BUDDY
+    <button type="submit" class="btn btn-lg btn-primary buttHead">SIGN IN</button>
+    <button type="submit" class="btn btn-lg btn-primary buttHead">SIGN UP</button>
+    </header>
+      <!-- <img class="col-xs-12 col-md-8" src="images/future.jpg"/> -->
+</nav>
+<div><img class="col-xs-12 col-md-8" src="images/bullet-train.jpg" width="1000"></div>
+<!-- <img class="col-xs-10 col-md-3" src="images/future.jpg"/>
+<img class="col-xs-8 col-md-3" src="images/high-Speed.jpg"/>
+<img class="col-xs-6 col-md-3" src="images/train.jpg"/> -->
+
+      <div class="col-xs-6">
+        <form id="route">
+          <input id ="userRequest" type="inputbox">
+          <button id="print" type="click" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </form>
+      </div>
+
+
+      <div id ="output1" class="col-xs-6"></div>
+      <!-- <div class="col-xs-6 col-sm-3"> </div>
+      <div class="col-xs-6 col-sm-3"> </div>
+      <div class="col-xs-6 col-sm-3"> </div>
+      <div class="col-xs-6 col-sm-3"> </div> -->
+
+
+
+  <script>
+    var userInput = document.getElementById('userRequest');
+    userInput.value = localStorage.getItem('userRequest');
+
+    var myDate = new Date();
+    var putInfo = document.getElementById("output1");
+
+    function runApp() {
+      var putOutput = document.getElementById("output1");
+      putInfo.textContent = myDate;
+      // putInfo.textContent = userInput.value;
+    }
+    $('#print').on('click', runApp);
+
+
+// putDate.textContent = myDate;
+
+
+
+
+        // $('#print').on('click', runApp);
+  </script>
+
+  </body>
+  </html>
+
+
