@@ -23,82 +23,97 @@
 
   </head>
   <body>
-  <nav class="col-xs-12 col-md-12">
-      <ul class="nav navbar-nav ">
-        <li ><a href="#">Home</a></li>
-        <li ><a href="#">About</a></li>
-        <li ><a href="#">Contact</a></li>
-      </ul>
-    <header> TRANSIT BUDDY
-      <button type="submit" class="btn btn-lg btn-primary">SIGN IN</button>
-      <button type="submit" class="btn btn-lg btn-primary">SIGN UP</button>
-    </header>
-      <!-- <img class="col-xs-12 col-md-8" src="images/future.jpg"/> -->
-</nav>
+    <nav class="col-xs-12 col-md-12">
+        <ul class="nav navbar-nav ">
+          <li ><a href="#">Home</a></li>
+          <li ><a href="#">About</a></li>
+          <li ><a href="#">Contact</a></li>
+        </ul>
+      <header> TRANSIT BUDDY
+        <button type="submit" class="btn btn-lg btn-primary">SIGN IN</button>
+        <button type="submit" class="btn btn-lg btn-primary">SIGN UP</button>
+      </header>
+    </nav>
 
-<div><img class="col-xs-12 col-md-6" src="images/future.jpg"></div>
-<div><img class="col-xs-12 col-md-6" src="images/future.jpg"></div>
-<!-- <img class="col-xs-10 col-md-3" src="images/future.jpg"/>
-<img class="col-xs-8 col-md-3" src="images/high-Speed.jpg"/>
-<img class="col-xs-6 col-md-3" src="images/train.jpg"/> -->
-
-      <div class="col-xs-6">
+      <div><img class="col-xs-12 col-md-6" src="images/future.jpg"></div>
+      <div><img class="col-xs-12 col-md-6" src="images/future.jpg"></div>
+      <div class="col-xs-12 col-md-12"> Please type route number to check for detour
         <form id="route">
           <input id ="userRequest" type="inputbox">
           <button id="print" type="click" class="btn btn-primary"><span class="glyphicon glyphicon-searc"></span> Search</button>
         </form>
       </div>
 
-
-    <div class="col-xs-6">
-        <form id="route2">
-          <input id ="userRequest2" type="inputbox">
-          <button id="print2" type="click" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
-        </form>
-      </div>
-
-  <div id ="output1" class="col-xs-6"></div>
-  <div id ="output2" class="col-xs-6"></div>
-
-
-      <!-- <div id ="output1" class="col-xs-6"></div> -->
-      <!-- <div class="col-xs-6 col-sm-3"> </div>
-      <div class="col-xs-6 col-sm-3"> </div>
-      <div class="col-xs-6 col-sm-3"> </div>
-      <div class="col-xs-6 col-sm-3"> </div> -->
-
-
-
+    <div id ="output1" class="col-xs-12 col-md-12">
+      <table id="transit">
+        <tr id="Detour">
+          <td> Route </td>
+          <td> Begin </td>
+          <td> End </td>
+          <td> Phonetic </td>
+          <td> Intersection </td>
+          <td> ID </td>
+          <td> Also Effecting </td>
+        </tr>
+      </table>
+    </div>
   <script>
 
+  var userInput = document.getElementById('userRequest');
+  userInput.value = localStorage.getItem('userRequest');
 
 
+$('#print').on('click', function(){
+  if (userInput.value){
+ var url = "http://developer.trimet.org/ws/V1/detours?appID=26905EAEEBA02217C9448D594&JSON=true"+"&routes="+userInput.value;
+} else {
+  var url = "http://developer.trimet.org/ws/V1/detours?appID=26905EAEEBA02217C9448D594&JSON=true"
+  }
+      var tableEl = document.getElementById("transit");
+      tableEl.style.display = "block";
 
-    var myDate = new Date();
-    var putInfo = document.getElementById("output1");
-    function runApp() {
-      var putOutput = document.getElementById("output1");
-      putInfo.textContent = myDate;
-    }
-    $('#print').on('click', runApp);
+  $.getJSON(url, function(data){
+    for (var i =0; i< data.resultSet.detour.length;i++){
+          var rowEl = document.createElement("tr");
+          tableEl.appendChild(rowEl);
+      for (var j=0;j<data.resultSet.detour[i].route.length;j++) {
+          var routes = data.resultSet.detour[i].route[j].route;
+          var idno = data.resultSet.detour[i].id;
+          var start = data.resultSet.detour[i].begin;
+          var end = data.resultSet.detour[i].end;
+          var address = data.resultSet.detour[i].route[j].desc;
+          var details = data.resultSet.detour[i].desc;
 
+          var cellEl = document.createElement("td");
+          cellEl.textContent = routes;
+          rowEl.appendChild(cellEl);
 
-    var userInput = document.getElementById('userRequest2');
-    userInput.value = localStorage.getItem('userRequest');
-    putInfo2 = document.getElementById("output2");
-    function runApp2() {
-      var putOutput = document.getElementById("output2");
-      putInfo2.textContent = userInput.value;
+          var cellEl = document.createElement("td");
+          cellEl.textContent = start;
+          rowEl.appendChild(cellEl);
 
-    }
+          var cellEl = document.createElement("td");
+          cellEl.textContent = end;
+          rowEl.appendChild(cellEl);
 
+          var cellEl = document.createElement("td");
+          cellEl.textContent = details;
+          rowEl.appendChild(cellEl);
 
-    $('#print2').on('click', runApp2);
+          var cellEl = document.createElement("td");
+          cellEl.textContent = address;
+          rowEl.appendChild(cellEl);
 
+          var cellEl = document.createElement("td");
+          cellEl.textContent = idno;
+          rowEl.appendChild(cellEl);
+        }
+     }
+  });
 
-  </script>
-
-  </body>
-  </html>
+})
+</script>
+</body>
+</html>
 
 
